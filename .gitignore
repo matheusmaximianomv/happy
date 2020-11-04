@@ -1,0 +1,7 @@
+## Node Modules
+backend/node_modules/
+web/node_modules/
+mobile/node_modules
+
+# Anotações
+anotations/
