@@ -3,5 +3,9 @@ backend/node_modules/
 web/node_modules/
 mobile/node_modules
 
+# Imagens
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Anotações
 anotations/
