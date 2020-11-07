@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Marker, Callout } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
 
@@ -23,7 +23,7 @@ export default function OrphanagesMap() {
   const [orphanages, setOrphanages] = useState<Array<IOrphanage>>([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
+  useFocusEffect(() => {
     async function getOrphanages() {
       const response = await api.get('/orphanages');
 
@@ -31,7 +31,7 @@ export default function OrphanagesMap() {
     }
 
     getOrphanages();
-  }, []);
+  });
 
   function handleNavigateToOrphanagesDetails(id: number) {
     navigation.navigate('OrphanagesDetails', { id });

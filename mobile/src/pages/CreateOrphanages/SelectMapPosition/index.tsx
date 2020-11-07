@@ -1,5 +1,5 @@
-import React from 'react';
-import { Marker } from 'react-native-maps';
+import React, { useState } from 'react';
+import { Marker, MapEvent } from 'react-native-maps';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,31 +8,45 @@ import { Container, MapView, NextButton, NextButtonText } from './styled';
 import mapMarkerImg from '../../../assets/map-marker.png';
 
 export default function SelectMapPosition() {
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+
   const navigation = useNavigation();
 
+  function handleSelectMapPosition(event: MapEvent) {
+    setPosition(event.nativeEvent.coordinate);
+  }
+
   function handleNextStep() {
-    navigation.navigate('OrphanageData');
+    navigation.navigate('OrphanageData', { position });
   }
 
   return (
     <Container>
       <MapView
         initialRegion={{
-          latitude: -27.2092052,
-          longitude: -49.6401092,
+          latitude: -7.2129638,
+          longitude: -39.3102358,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}
+        onPress={handleSelectMapPosition}
       >
-        <Marker
-          icon={mapMarkerImg}
-          coordinate={{ latitude: -27.2092052, longitude: -49.6401092 }}
-        />
+        {position.latitude !== 0 && (
+          <Marker
+            icon={mapMarkerImg}
+            coordinate={{
+              latitude: position.latitude,
+              longitude: position.longitude,
+            }}
+          />
+        )}
       </MapView>
 
-      <NextButton onPress={handleNextStep}>
-        <NextButtonText font="Nunito_800ExtraBold">Próximo</NextButtonText>
-      </NextButton>
+      {position.latitude !== 0 && (
+        <NextButton onPress={handleNextStep}>
+          <NextButtonText font="Nunito_800ExtraBold">Próximo</NextButtonText>
+        </NextButton>
+      )}
     </Container>
   );
 }

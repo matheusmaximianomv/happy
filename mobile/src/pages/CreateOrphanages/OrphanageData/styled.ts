@@ -65,6 +65,17 @@ export const ImagesInput = styled(TouchableOpacity)`
   margin-bottom: 32px;
 `;
 
+export const UploadedImagesContainer = styled.View`
+  flex-direction: row;
+`;
+
+export const UploadedImage = styled.Image`
+  height: 64px;
+  width: 64px;
+  border-radius: 20px;
+  margin: 0px 8px 32px;
+`;
+
 export const SwitchContainer = styled.View`
   flex-direction: row;
   align-items: center;

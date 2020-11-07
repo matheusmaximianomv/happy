@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Linking } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -62,7 +62,7 @@ export default function OrphanageDetails() {
 
       const images = response.data.images?.map((image) => ({
         id: image.id,
-        url: `http://192.168.1.7:3333${image.url.split(':3333')[1]}`,
+        url: `http://192.168.1.4:3333${image.url.split(':3333')[1]}`,
       }));
 
       const data = {
@@ -77,11 +77,19 @@ export default function OrphanageDetails() {
         images,
       };
 
+      console.log(data);
+
       setOrphanage(data);
     }
 
     getOrphanage();
   }, [params.id]);
+
+  function handleOpenGoogleMapRoutes() {
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${orphanage.latitude},${orphanage.longitude}`
+    );
+  }
 
   if (!orphanage) {
     return (
@@ -132,7 +140,7 @@ export default function OrphanageDetails() {
             />
           </MapView>
 
-          <RoutesContainer>
+          <RoutesContainer onPress={handleOpenGoogleMapRoutes}>
             <RoutesText font="Nunito_700Bold">
               Ver rotas no Google Maps
             </RoutesText>
@@ -147,17 +155,24 @@ export default function OrphanageDetails() {
         </Description>
 
         <ScheduleContainer>
-          <ScheduleItem color="blue">
+          <ScheduleItem bgColor="#e6f7fb" bdColor="#B3DAE2">
             <Feather name="clock" size={40} color="#2ab5d1" />
             <ScheduleText font="Nunito_600SemiBold">
               Segunda à Sexta {orphanage?.opening_hours}
             </ScheduleText>
           </ScheduleItem>
 
-          <ScheduleItem color={orphanage?.open_on_weekends ? 'green' : 'blue'}>
-            <Feather name="info" size={40} color="#39cc83" />
+          <ScheduleItem
+            bgColor={orphanage?.open_on_weekends ? '#edfff6' : '#fef6f9'}
+            bdColor={orphanage?.open_on_weekends ? '#A1E9C5' : '#ffbcd4'}
+          >
+            <Feather
+              name="info"
+              size={40}
+              color={orphanage?.open_on_weekends ? '#39cc83' : '#ff6690'}
+            />
             <ScheduleText font="Nunito_600SemiBold">
-              {orphanage?.opening_hours
+              {orphanage?.open_on_weekends
                 ? 'Atendemos fim de semana'
                 : 'Não atendemos fim de semana'}
             </ScheduleText>

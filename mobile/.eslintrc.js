@@ -12,6 +12,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
+  globals: {
+    FormData: false,
+  },
   settings: {
     'import/resolver': {
       node: {
@@ -32,6 +35,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-use-before-define': 'off',
     'react/style-prop-object': 'off',
+    'no-alert': 'off',
     camelcase: [
       'error',
       {

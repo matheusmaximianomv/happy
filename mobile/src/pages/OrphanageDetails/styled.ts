@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
+import { Dimensions, TouchableOpacity } from 'react-native';
 
 import MV from 'react-native-maps';
 import { RectButton } from 'react-native-gesture-handler';
@@ -7,7 +7,8 @@ import { RectButton } from 'react-native-gesture-handler';
 import IText from '../../models/IText';
 
 interface IScheduleItemProps {
-  color: string;
+  bgColor: string;
+  bdColor: string;
 }
 
 export const Container = styled.ScrollView`
@@ -54,7 +55,7 @@ export const MapView = styled(MV)`
   height: 150px;
 `;
 
-export const RoutesContainer = styled.View`
+export const RoutesContainer = styled(TouchableOpacity)`
   padding: 16px;
   align-items: center;
   color: #0089a5;
@@ -96,9 +97,12 @@ export const ScheduleItem = styled.View<IScheduleItemProps>`
   padding: 20px;
   border-width: 1px;
   border-radius: 20px;
-  background-color: ${(props) =>
+  background: ${(props) => props.bgColor};
+  border-color: ${(props) => props.bdColor};
+  /* background-color: ${(props) =>
     props.color === 'blue' ? '#e6f7fb' : '#edfff6'};
-  border-color: ${(props) => (props.color === 'blue' ? '#B3DAE2' : '#A1E9C5')};
+  border-color: ${(props) =>
+    props.color === 'blue' ? '#B3DAE2' : '#A1E9C5'}; */
 `;
 
 export const ScheduleText = styled.Text<IText>`
